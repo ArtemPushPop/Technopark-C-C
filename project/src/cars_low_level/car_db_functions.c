@@ -1,7 +1,10 @@
 #include "car_db_functions.h"
 
+
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
+
 
 #define SQR(X) ((X) * (X))
 
@@ -18,7 +21,7 @@ int _copy_car(car * array_car, const car c){
 }
 
 
-int _calclate_normalization(car_db *db){
+int _calclute_normalization(car_db *db){
     //начальное обнуление
     memset(db->ozh_disp, 0, sizeof(size_t) * 6);
 
@@ -32,18 +35,17 @@ int _calclate_normalization(car_db *db){
         db->ozh_disp[0][i] /= (double) (db->size);
 
     //Высчитываем дисперсию
-    //изначальное обнуление
-    for (size_t i = 0; i < SIZE_NORMALIZATION; i++)
-        db->ozh_disp[1][i] = 0;
 
     for (size_t i = 0; i < db->size; i++) {
-        db->ozh_disp[1][0] += SQR(db->car_items[i].enginev - db->ozh_disp[0][0]);
-        db->ozh_disp[1][1] += SQR(db->car_items[i].speed - db->ozh_disp[0][1]);
-        db->ozh_disp[1][2] += SQR(db->car_items[i].fuel_consum - db->ozh_disp[0][2]);
+        db->ozh_disp[1][0] += SQR((double)db->car_items[i].enginev - (double)db->ozh_disp[0][0]);
+        db->ozh_disp[1][1] += SQR((double)db->car_items[i].speed - (double)db->ozh_disp[0][1]);
+        db->ozh_disp[1][2] += SQR((double)db->car_items[i].fuel_consum - (double)db->ozh_disp[0][2]);
     }
 
-    for (size_t i = 0; i < SIZE_NORMALIZATION; i++)
-        db->ozh_disp[1][i] = db->ozh_disp[i][1] / (double) (db->size - 1);
+    for (size_t i = 0; i < SIZE_NORMALIZATION; i++){
+        db->ozh_disp[1][i] = db->ozh_disp[1][i] / (double) (db->size);
+        db->ozh_disp[1][i] = sqrt(db->ozh_disp[1][i]);
+    }
 
     return 0;
 }
@@ -90,15 +92,17 @@ int _delete(car_db *db, const size_t pos){
 
 
 int _clear(car_db *db){
-    for (int i = 0; i < db->size; i++){
-        free(db->car_items[i].body_shape);
-        db->car_items[i].body_shape = NULL;
-        free(db->car_items[i].model);
-        db->car_items[i].model = NULL;
+    if (db->size > 0) {
+        for (int i = 0; i < db->size; i++) {
+            free(db->car_items[i].body_shape);
+            db->car_items[i].body_shape = NULL;
+            free(db->car_items[i].model);
+            db->car_items[i].model = NULL;
+        }
+        free(db->car_items);
+        db->car_items = NULL;
+        db->size = 0;
     }
-    free(db->car_items);
-    db->car_items = NULL;
-    db->size = 0;
 
     return 0;
 }

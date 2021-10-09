@@ -6,16 +6,21 @@ set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_C_FLAGS "-Wall -Werror -Wpedantic -ggdb3")
 
-set(PROJECT_FOLDER ./project/)
+set(PROJECT_FOLDER ${CMAKE_CURRENT_SOURCE_DIR}/project)
+set(DATA_FILE "${CMAKE_CURRENT_SOURCE_DIR}/data/data.txt")
 
-add_executable(main "${PROJECT_FOLDER}main.c")
+add_executable(main "${PROJECT_FOLDER}/main.c")
 
 #build libraries
-add_subdirectory("${PROJECT_FOLDER}src/")
-
-include_directories("${PROJECT_FOLDER}include/")
-
+add_subdirectory("${PROJECT_FOLDER}/src/")
 target_link_libraries(main car)
+include_directories(${PROJECT_FOLDER}/include/
+                    )
+
+#configure main.h (data file setting)
+configure_file("${PROJECT_FOLDER}/include/main.h.in" "${PROJECT_FOLDER}/include/main.h")
+
+#tests
 
 option(TEST "Build tests" OFF)
 if (TEST)

@@ -1,4 +1,5 @@
 #include "car_db_functions.h"
+#include "UI_functions.h"
 
 
 #include <stdio.h>
@@ -22,18 +23,31 @@ int read_data(car_db *db, const char *file_name) {
         token = strtok(buf, DELIM);
 
         c.model = token;
+        _to_lower_string(c.model);
         token = strtok(NULL, DELIM);
         c.body_shape = token;
+        _to_lower_string(c.model);
+
         token = strtok(NULL, DELIM);
         sscanf(token, "%zu", &(c.enginev));
         token = strtok(NULL, DELIM);
         sscanf(token, "%zu", &(c.speed));
         token = strtok(NULL, DELIM);
         sscanf(token, "%zu", &(c.fuel_consum));
-        _append(db, c);
+        if (!validate_car(c)){
+            printf("ERROR WHILE READING DATA FILE");
+            _clear(db);
+            fclose(fp);
+            if (buf != NULL)
+                free(buf);
+            return -1;
+        }
+        else{
+            _append(db, c);
+        }
     }
 
-    _calclate_normalization(db);
+    _calclute_normalization(db);
 
     fclose(fp);
     if (buf != NULL)

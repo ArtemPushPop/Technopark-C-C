@@ -1,7 +1,8 @@
-#ifndef CAR_DB_FUNCTIONS
-#define CAR_DB_FUNCTIONS
+#pragma once
+
 
 #include <glob.h>
+
 
 typedef struct car{
     size_t enginev;
@@ -19,7 +20,7 @@ typedef struct car_db{
 } car_db;
 
 
-int _calclate_normalization(car_db *);
+int _calclute_normalization(car_db *db);
 int _copy_car(car *, car);
 int _add(car_db *, car, size_t);
 int _append(car_db *, car);
@@ -35,4 +36,3 @@ int _clear(car_db *);
 
 #define SIZE_NORMALIZATION 3
 
-#endif //CAR_DB_FUNCTIONS

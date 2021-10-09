@@ -1,6 +1,5 @@
-#ifndef IZ1_MAIN_H
-#define IZ1_MAIN_H
+#pragma once
 
-const char data_file[] = "/data/data.txt";
 
-#endif //IZ1_MAIN_H
+#define DATA_FILE "/home/artem/TECHNOPARK/Csem/HOMEWORKS/data/data.txt"
+
