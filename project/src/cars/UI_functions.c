@@ -22,8 +22,7 @@ int _to_lower_string(char *str){
 
 
 int init(car_db *db) {
-    db->size = 0;
-    return 0;
+    return _init_db(db);
 }
 
 

@@ -14,11 +14,11 @@ int read_data(car_db *db, const char *file_name) {
         return -1;
     }
 
-    db->size = 0;
+    _clear(db);
     car c;
     char *token;
-    char *buf;
-    size_t n;
+    char *buf = NULL;
+    size_t n = 0;
     while (getline(&buf, &n, fp) != -1) {
         token = strtok(buf, DELIM);
 
@@ -49,6 +49,7 @@ int read_data(car_db *db, const char *file_name) {
 
     _calclute_normalization(db);
 
+    fseek(fp, 0, SEEK_SET);
     fclose(fp);
     if (buf != NULL)
         free(buf);

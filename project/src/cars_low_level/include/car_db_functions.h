@@ -26,7 +26,7 @@ int _add(car_db *, car, size_t);
 int _append(car_db *, car);
 int _delete(car_db *, size_t);
 int _clear(car_db *);
-
+int _init_db(car_db *);
 
 
 #define MODEL_PROMPT 1

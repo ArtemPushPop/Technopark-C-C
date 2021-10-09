@@ -69,6 +69,12 @@ int _add(car_db *db, const car c, const size_t pos){
 }
 
 
+int _init_db(car_db *db) {
+    db->size = 0;
+    return 0;
+}
+
+
 int _append(car_db *bd, const car c){
     _add(bd, c, bd->size);
     return 0;
