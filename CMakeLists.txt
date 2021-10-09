@@ -1,10 +1,13 @@
-cmake_minimum_required(VERSION 3.14)
+cmake_minimum_required(VERSION 3.17)
 project(IZ1)
 
 set(CMAKE_C_STANDARD 99)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_C_FLAGS "-Wall -Werror -Wpedantic -ggdb3")
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED  ON)
+set(CMAKE_CXX_FLAGS "-std=c++0x -Wall -Werror -Wpedantic -ggdb3 -O3")
 
 set(PROJECT_FOLDER ${CMAKE_CURRENT_SOURCE_DIR}/project)
 set(DATA_FILE "${CMAKE_CURRENT_SOURCE_DIR}/data/data.txt")
@@ -24,18 +27,5 @@ configure_file("${PROJECT_FOLDER}/include/main.h.in" "${PROJECT_FOLDER}/include/
 
 option(TEST "Build tests" OFF)
 if (TEST)
-    include(FetchContent)
-    FetchContent_Declare(
-            googletest
-            URL https://github.com/google/googletest/archive/609281088cfefc76f9d0ce82e1ff6c30cc3591e5.zip
-    )
-    set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
-    FetchContent_MakeAvailable(googletest)
-
-    enable_testing()
-
-    # Create binaries of tests
-    add_executable(mmfile_tests tests/test_hello.cpp)
-    target_link_libraries(mmfile_tests gtest_main)
-    target_link_libraries(mmfile_tests test_lib)
+    add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/tests")
 endif ()

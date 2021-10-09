@@ -14,6 +14,6 @@ int validate_car(car );
 int add(struct car_db *, const car , const size_t );
 int add_prompt(car_db *, FILE *);
 int append(car_db *, const car );
-int delete(car_db *, const size_t );
+int delete_car_from_db(car_db *, const size_t );
 int clear(car_db *);
 

@@ -156,7 +156,7 @@ int append(car_db *db, const car c) {
 }
 
 
-int delete(car_db *db, const size_t pos) {
+int delete_car_from_db(car_db *db, const size_t pos) {
     if (pos >= db->size)
         return -1;  //неправильный параметр позиции
     _delete(db, pos);
