@@ -1,14 +1,10 @@
 #include "car_db_functions.h"
+#include "models_backs.h"
+
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-
-char *available_models[] = {"Nissan", "Bugatty", "Mercedes", "BMW", "Pejo", "Audi"};
-size_t models_number = 6;
-char *body_shapes[] = {"hatch back", "sports car", "limousine", "van", "pick-up truck", "four-door sedan"};
-size_t body_number = 6;
 
 
 /*
@@ -28,7 +24,7 @@ int print_car(const car c) {
     printf("Мощность двигателя : %zu \n", c.enginev);
     printf("Скорость           : %zu \n", c.speed);
     printf("Потребление топлива: %zu \n", c.fuel_consum);
-    printf("Форма кузова       : %s\n", c.body_shape);
+    printf("Форма кузова       : %s  \n", c.body_shape);
     return 0;
 }
 
@@ -51,7 +47,7 @@ int add(struct car_db *db, const car c, const size_t pos) {
 }
 
 
-int _prompt_string(char **str, size_t type) {
+static int _prompt_string(char **str, size_t type) {
     char str_t[11];
     size_t size;
     char **check;
@@ -90,7 +86,7 @@ int _prompt_string(char **str, size_t type) {
 }
 
 
-int _prompt_int(size_t *i) {
+static int _prompt_int(size_t *i) {
     while (scanf("%zu", i) != 1)
         printf("ERROR, try again\n");
     return 0;
