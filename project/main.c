@@ -9,6 +9,7 @@ int main(){
     init(&db);
     //считывание данных из файла
     read_data(&db, DATA_FILE);
+
     //запись в car последнего элемента нашей базы данных
     car c = db.car_items[db.size - 1];
 
@@ -60,5 +61,6 @@ int main(){
     read_data(&db, DATA_FILE);
     write_data(&db, DATA_FILE);
     //завершим программу
+    _clear(&db);
     return 0;
 }

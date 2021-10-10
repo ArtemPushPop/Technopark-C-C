@@ -146,6 +146,8 @@ TEST_F(TestCarDBFixture, TestPrompt) {
     ASSERT_EQ(db.car_items[db.size - 1].enginev, db.car_items[db.size - 2].enginev);
     ASSERT_EQ(db.car_items[db.size - 1].fuel_consum, db.car_items[db.size - 2].fuel_consum);
     ASSERT_EQ(db.car_items[db.size - 1].speed, db.car_items[db.size - 2].speed);
+
+    fclose(fp);
 }
 
 

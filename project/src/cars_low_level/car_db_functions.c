@@ -13,9 +13,9 @@ int _copy_car(car * array_car, const car c){
     array_car->fuel_consum = c.fuel_consum;
     array_car->speed = c.speed;
     array_car->enginev = c.enginev;
-    array_car->body_shape = malloc(strlen(c.body_shape));
+    array_car->body_shape = malloc(strlen(c.body_shape) + 1);
     strcpy(array_car->body_shape, c.body_shape);
-    array_car->model = malloc(strlen(c.model));
+    array_car->model = malloc(strlen(c.model) + 1);
     strcpy(array_car->model, c.model);
     return 0;
 }

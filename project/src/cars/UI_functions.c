@@ -15,7 +15,7 @@
 
 
 int _to_lower_string(char *str){
-    for (size_t i = 0; i < strlen(str); i++)
+    for (size_t i = 0; i < strlen(str) + 1; i++)
         str[i] = tolower(str[i]);
     return 0;
 }
@@ -106,7 +106,7 @@ static int _prompt_string(char **str, size_t type, FILE *fp) {
                        "for now insert valid %s.\n", str_t, str_t, str_t);
             else {
                 scanned = 1;
-                *str = (char *) malloc(sizeof(char) * strlen(buffer));
+                *str = (char *) calloc(strlen(buffer) + 1, sizeof(char));
                 strcpy(*str, buffer);
             }
         }
