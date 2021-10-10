@@ -6,7 +6,8 @@
 
 int write_data(car_db *db, const char *file_name){
     FILE *fp;
-    if((fp=fopen(file_name, "w")) == NULL) {
+
+    if((fp=fopen(file_name, "r +")) == NULL) {
         printf("Cannot open file.\n");
         return -1;
     }

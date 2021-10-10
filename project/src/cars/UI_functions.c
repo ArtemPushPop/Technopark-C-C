@@ -92,7 +92,8 @@ static int _prompt_string(char **str, size_t type, FILE *fp) {
     size_t scanned = 0;
     char buffer[200];
     while (scanned != 1) {
-        printf("type in %s: ", str_t);
+        if (fp == stdin)
+            printf("type in %s: ", str_t);
         if (fscanf(fp, "%s", buffer) != 1)
             printf("INPUT ERROR, TRY AGAIN\n");
         else {
@@ -115,14 +116,16 @@ static int _prompt_string(char **str, size_t type, FILE *fp) {
 
 
 static int _prompt_int(size_t *i, FILE *fp, const char prompt[]) {
-    printf("%s", prompt);
+    if (fp == stdin)
+        printf("%s", prompt);
     while (fscanf(fp, "%zu", i) != 1) {
         printf("ERROR, try again\n");
         while (fgetc(fp) != '\n');
         printf("%s", prompt);
     }
 
-    while (fgetc(fp) != '\n');
+    if (fp == stdin)
+        while (fgetc(fp) != '\n');
 
     return 0;
 }
@@ -133,11 +136,11 @@ int add_prompt(car_db *db, FILE *fp) {
     _prompt_string(&(c.model), MODEL_PROMPT, fp);
     _prompt_string(&(c.body_shape), BACK_PROMPT, fp);
 
+    _prompt_int(&(c.enginev), fp, "enter engine power: ");
+
     _prompt_int(&(c.speed), fp, "enter car speed: ");
 
     _prompt_int(&(c.fuel_consum), fp, "enter fuel consumption: ");
-
-    _prompt_int(&(c.enginev), fp, "enter engine power: ");
 
     _append(db, c);
     _calclute_normalization(db);

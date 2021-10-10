@@ -55,7 +55,12 @@ matrix:
             - g++-6
             - cppcheck
       script:
-        - cppcheck ../project/main.cpp
+        - cppcheck ../project/main.c
+        - cppcheck ../project/src/cars/data_loader.c
+        - cppcheck ../project/src/cars/data_saver.c
+        - cppcheck ../project/src/cars/metric.c
+        - cppcheck ../project/src/cars/UI_functions.c
+        - cppcheck ../project/src/cars_low_level/car_db_functions.c
 
     - os: linux
       env:
