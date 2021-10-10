@@ -63,7 +63,7 @@ int _add(car_db *db, const car c, const size_t pos){
         return 0;
     }
 
-    memmove(&db[pos + 1], &db[pos], sizeof(car) * (db->size - 1 - pos));
+    memmove(&(db->car_items[pos + 1]), &(db->car_items[pos]), sizeof(car) * (db->size - 1 - pos));
     _copy_car(&(db->car_items[pos]), c);
     return 0;
 }

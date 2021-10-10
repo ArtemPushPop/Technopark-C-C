@@ -20,6 +20,7 @@ int read_data(car_db *db, const char *file_name) {
     char *buf = NULL;
     size_t n = 0;
     while (getline(&buf, &n, fp) != -1) {
+        size_t flag = 0;
         token = strtok(buf, DELIM);
 
         c.model = token;
@@ -29,12 +30,12 @@ int read_data(car_db *db, const char *file_name) {
         _to_lower_string(c.model);
 
         token = strtok(NULL, DELIM);
-        sscanf(token, "%zu", &(c.enginev));
+        flag += (sscanf(token, "%zu", &(c.enginev)) != 1) ? 1 : 0;
         token = strtok(NULL, DELIM);
-        sscanf(token, "%zu", &(c.speed));
+        flag += (sscanf(token, "%zu", &(c.speed)) != 1) ? 1 : 0;
         token = strtok(NULL, DELIM);
-        sscanf(token, "%zu", &(c.fuel_consum));
-        if (!validate_car(c)){
+        flag += (sscanf(token, "%zu", &(c.fuel_consum)) != 1) ? 1 : 0;
+        if (!validate_car(c) || flag != 0){
             printf("ERROR WHILE READING DATA FILE");
             _clear(db);
             fclose(fp);
