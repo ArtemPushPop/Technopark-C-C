@@ -77,7 +77,7 @@ matrix:
       script:
         - cmake -DTEST=ON -dENABLE_COVERAGE=ON ..
         - make
-        - export CODECOV_TOKEN='8b280f83-f856-4207-9650-75cd853b5390'
+        - export CODECOV_TOKEN='89f19a22-138e-4397-853a-85cfd3a3e584'
         - valgrind --tool=memcheck --child-silent-after-fork=yes --leak-check=full --track-origins=yes  --show-leak-kinds=all ./test_car_low_level
         - valgrind --tool=memcheck --child-silent-after-fork=yes --leak-check=full --track-origins=yes  --show-leak-kinds=all ./test_cars_lib
         - ctest --verbose
