@@ -70,8 +70,8 @@ matrix:
         - ARTIFACTS_SECRET=shF3mOt2CBEpx5NTVH9KcC+Wv4Ps7fswfbsrPqAF
         - ARTIFACTS_BUCKET=artempushpoptravisartifacts
       addons:
-        artifacts:
-          paths: $home/ArtemPushPop/Technopark-C-C/build/Testing/Temporary/LastTest.log
+        artifacts: true
+          # paths: $home/ArtemPushPop/Technopark-C-C/build/Testing/Temporary/LastTest.log
         apt:
           sources:
             - ubuntu-toolchain-r-test
@@ -87,4 +87,4 @@ matrix:
         - valgrind --tool=memcheck --child-silent-after-fork=yes --leak-check=full --track-origins=yes  --show-leak-kinds=all ./test_cars_lib
         - ctest --verbose
       after_success:
-        - bash <(curl -s https://codecov.io/bash)
+        - "travis-artifacts upload --path Testing/Temporary/LastTest.log"
