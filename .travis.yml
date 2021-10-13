@@ -26,6 +26,7 @@ before_script:
   - mkdir build
   - cd build
 
+
 matrix:
   include:
     - os: linux
@@ -80,4 +81,4 @@ matrix:
         - valgrind --tool=memcheck --child-silent-after-fork=yes --leak-check=full --track-origins=yes  --show-leak-kinds=all ./test_car_low_level
         - valgrind --tool=memcheck --child-silent-after-fork=yes --leak-check=full --track-origins=yes  --show-leak-kinds=all ./test_cars_lib
         - ctest --verbose
-        - bash <(curl -s https://codecov.io/bash)
+        - bash <(curl -s https://codecov.io/bash) 
