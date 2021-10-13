@@ -75,7 +75,7 @@ matrix:
             - g++-6
             - valgrind
       script:
-        - cmake -DTEST=ON ..
+        - cmake -DTEST=ON -dENABLE_COVERAGE=ON ..
         - make
         - CODECOV_TOKEN='8b280f83-f856-4207-9650-75cd853b5390'
         - valgrind --tool=memcheck --child-silent-after-fork=yes --leak-check=full --track-origins=yes  --show-leak-kinds=all ./test_car_low_level
