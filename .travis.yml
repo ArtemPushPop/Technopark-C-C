@@ -65,13 +65,7 @@ matrix:
 
     - os: linux
       env:
-        - TEST="Codecov + Tests"
-        - ARTIFACTS_KEY=AKIAXMKKP4VWWXGZE3GN
-        - ARTIFACTS_SECRET=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
-        - ARTIFACTS_BUCKET=artempushpoptravisartifacts
       addons:
-        artifacts: true
-          # paths: $home/ArtemPushPop/Technopark-C-C/build/Testing/Temporary/LastTest.log
         apt:
           sources:
             - ubuntu-toolchain-r-test
@@ -82,9 +76,6 @@ matrix:
       script:
         - cmake -DTEST=ON -dENABLE_COVERAGE=ON ..
         - make
-        - CODECOV_TOKEN='8b280f83-f856-4207-9650-75cd853b5390'
         - valgrind --tool=memcheck --child-silent-after-fork=yes --leak-check=full --track-origins=yes  --show-leak-kinds=all ./test_car_low_level
         - valgrind --tool=memcheck --child-silent-after-fork=yes --leak-check=full --track-origins=yes  --show-leak-kinds=all ./test_cars_lib
         - ctest --verbose
-      after_success:
-        - "travis-artifacts upload --path Testing/Temporary/LastTest.log"
