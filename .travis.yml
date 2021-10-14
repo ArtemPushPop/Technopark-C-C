@@ -83,13 +83,13 @@ matrix:
         - valgrind --tool=memcheck --child-silent-after-fork=yes --leak-check=full --track-origins=yes  --show-leak-kinds=all ./test_cars_lib
         - ctest --verbose
 
-        - cd Testing
-        - gcov -o ../project/src/cars/CMakeFiles/car.dir data_saver.c.
-        - gcov -o ../project/src/cars/CMakeFiles/car.dir data_loader.c.
-        - gcov -o ../project/src/cars/CMakeFiles/car.dir metric.c.
-        - gcov -o ../project/src/cars/CMakeFiles/car.dir UI_functions.c.
-        - gcov -o ../project/src/cars_low_level/CMakeFiles/car_low_level.dir car_db_functions.c.
-        
+        # - cd Testing
+        # - gcov -o ../project/src/cars/CMakeFiles/car.dir data_saver.c.
+        # - gcov -o ../project/src/cars/CMakeFiles/car.dir data_loader.c.
+        # - gcov -o ../project/src/cars/CMakeFiles/car.dir metric.c.
+        # - gcov -o ../project/src/cars/CMakeFiles/car.dir UI_functions.c.
+        # - gcov -o ../project/src/cars_low_level/CMakeFiles/car_low_level.dir car_db_functions.c.
+
         - export CODECOV_TOKEN='89f19a22-138e-4397-853a-85cfd3a3e584'
         - curl -Os https://uploader.codecov.io/latest/linux/codecov
 
