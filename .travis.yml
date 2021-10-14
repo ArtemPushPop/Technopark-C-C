@@ -79,11 +79,9 @@ matrix:
         - cmake -DTEST=ON -DENABLE_COVERAGE=ON ..
         - make
         - make IZ1_coverage
-        - export CODECOV_TOKEN='89f19a22-138e-4397-853a-85cfd3a3e584'
         - valgrind --tool=memcheck --child-silent-after-fork=yes --leak-check=full --track-origins=yes  --show-leak-kinds=all ./test_car_low_level
         - valgrind --tool=memcheck --child-silent-after-fork=yes --leak-check=full --track-origins=yes  --show-leak-kinds=all ./test_cars_lib
         - ctest --verbose
-        - curl -Os https://uploader.codecov.io/latest/linux/codecov
 
         - cd Testing
         - gcov -o ../project/src/cars/CMakeFiles/car.dir data_saver.c.
@@ -91,6 +89,9 @@ matrix:
         - gcov -o ../project/src/cars/CMakeFiles/car.dir metric.c.
         - gcov -o ../project/src/cars/CMakeFiles/car.dir UI_functions.c.
         - gcov -o ../project/src/cars_low_level/CMakeFiles/car_low_level.dir car_db_functions.c.
+        
+        - export CODECOV_TOKEN='89f19a22-138e-4397-853a-85cfd3a3e584'
+        - curl -Os https://uploader.codecov.io/latest/linux/codecov
 
         - chmod +x codecov
         - ./codecov -z -C "e04fcf272ba0ff999cc5896a11243297eb0c2ea4" -t ${CODECOV_TOKEN}
