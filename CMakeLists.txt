@@ -62,7 +62,11 @@ if (TEST)
 
     set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/scripts_cmake)
     include(CodeCoverage)
-    setup_target_for_coverage_gcovr_html(
+    # setup_target_for_coverage_gcovr_html(
+    #       NAME IZ1_coverage
+    #       EXECUTABLE ctest
+    #       BASE_DIRECTORY "${PROJECT_FOLDER}/src")
+    setup_target_for_coverage_fastcov(
           NAME IZ1_coverage
           EXECUTABLE ctest
           BASE_DIRECTORY "${PROJECT_FOLDER}/src")
