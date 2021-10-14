@@ -66,6 +66,7 @@ matrix:
 
     - os: linux
       env:
+        - TEST="coverage + valgrind tests"
       addons:
         apt:
           sources:
