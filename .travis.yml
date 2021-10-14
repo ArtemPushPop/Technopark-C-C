@@ -76,7 +76,7 @@ matrix:
             - gcovr
             - valgrind
       script:
-        - cmake -DTEST=ON -dENABLE_COVERAGE=ON ..
+        - cmake -DTEST=ON -DENABLE_COVERAGE=ON ..
         - make
         - make IZ1_coverage
         - export CODECOV_TOKEN='89f19a22-138e-4397-853a-85cfd3a3e584'
