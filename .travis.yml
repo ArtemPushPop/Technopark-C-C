@@ -1,0 +1,98 @@
+language: cpp
+dist: bionic
+compiler: gcc
+
+
+# the install step will take care of deploying a newer cmake version
+install:
+  # first we create a directory for the CMake binaries
+  - DEPS_DIR="${TRAVIS_BUILD_DIR}/deps"
+  - mkdir ${DEPS_DIR} && cd ${DEPS_DIR}
+  # we use wget to fetch the cmake binaries
+  - travis_retry wget --no-check-certificate https://cmake.org/files/v3.15/cmake-3.15.1-Linux-x86_64.tar.gz
+  # extract the binaries; the output here is quite lengthy,
+  # so we swallow it to not clutter up the travis console
+  - tar -xvf cmake-3.15.1-Linux-x86_64.tar.gz > /dev/null
+  - mv cmake-3.15.1-Linux-x86_64 cmake-install
+  # add both the top-level directory and the bin directory from the archive
+  # to the system PATH. By adding it to the front of the path we hide the
+  # preinstalled CMake with our own.
+  - PATH=${DEPS_DIR}/cmake-install:${DEPS_DIR}/cmake-install/bin:$PATH
+  # don't forget to switch back to the main build directory once you are done
+  - cd ${TRAVIS_BUILD_DIR}
+
+
+before_script:
+  - mkdir build
+  - cd build
+
+
+matrix:
+  include:
+    - os: linux
+      env:
+        - TEST="valgrind"
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - gcc-6
+            - g++-6
+            - valgrind
+      script:
+        - cmake ..
+        - make
+        - valgrind --tool=memcheck --child-silent-after-fork=yes --leak-check=full --track-origins=yes  --show-leak-kinds=all ./main
+
+    - os: linux
+      env:
+        - TEST="cppcheck"
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - gcc-6
+            - g++-6
+            - cppcheck
+      script:
+        - cppcheck ../project/main.c
+        - cppcheck ../project/src/cars/data_loader.c
+        - cppcheck ../project/src/cars/data_saver.c
+        - cppcheck ../project/src/cars/metric.c
+        - cppcheck ../project/src/cars/UI_functions.c
+        - cppcheck ../project/src/cars_low_level/car_db_functions.c
+
+    - os: linux
+      env:
+        - TEST="coverage + valgrind tests"
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - gcc-6
+            - g++-6
+            - gcovr
+            - valgrind
+      script:
+        - cmake -DTEST=ON -DENABLE_COVERAGE=ON ..
+        - make
+        - make IZ1_coverage
+        - valgrind --tool=memcheck --child-silent-after-fork=yes --leak-check=full --track-origins=yes  --show-leak-kinds=all ./test_car_low_level
+        - valgrind --tool=memcheck --child-silent-after-fork=yes --leak-check=full --track-origins=yes  --show-leak-kinds=all ./test_cars_lib
+        - ctest --verbose
+
+        # - cd Testing
+        # - gcov -o ../project/src/cars/CMakeFiles/car.dir data_saver.c.
+        # - gcov -o ../project/src/cars/CMakeFiles/car.dir data_loader.c.
+        # - gcov -o ../project/src/cars/CMakeFiles/car.dir metric.c.
+        # - gcov -o ../project/src/cars/CMakeFiles/car.dir UI_functions.c.
+        # - gcov -o ../project/src/cars_low_level/CMakeFiles/car_low_level.dir car_db_functions.c.
+
+        - export CODECOV_TOKEN='89f19a22-138e-4397-853a-85cfd3a3e584'
+        - curl -Os https://uploader.codecov.io/latest/linux/codecov
+
+        - chmod +x codecov
+        - ./codecov -t ${CODECOV_TOKEN}
