@@ -7,7 +7,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_C_FLAGS "-Wall -Werror -Wpedantic -ggdb3 -ftest-coverage -fprofile-arcs")
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_FLAGS "-std=c++0x -Wall -Werror -Wpedantic -ggdb3 -O3 -fprofile-arcs -ftest-coverage")
+set(CMAKE_CXX_FLAGS "-std=c++0x -Wall -Werror -Wpedantic -ggdb3 -O3")
 
 set(PROJECT_FOLDER ${CMAKE_CURRENT_SOURCE_DIR}/project)
 set(DATA_FILE "${CMAKE_CURRENT_SOURCE_DIR}/data/data.txt")
@@ -26,11 +26,11 @@ configure_file("${PROJECT_FOLDER}/include/main.h.in" "${PROJECT_FOLDER}/include/
 
 option(ENABLE_COVERAGE "Build tests coverage statistic" OFF)
 if (ENABLE_COVERAGE)
-    # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g ")
-    # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O0")
-    # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fprofile-arcs")
-    # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -ftest-coverage")
-    # set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} --coverage")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g ")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O0")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fprofile-arcs")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -ftest-coverage")
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} --coverage")
 endif ()
 
 option(TEST "Build tests" OFF)
@@ -62,11 +62,7 @@ if (TEST)
 
     set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/scripts_cmake)
     include(CodeCoverage)
-    # setup_target_for_coverage_gcovr_html(
-    #       NAME IZ1_coverage
-    #       EXECUTABLE ctest
-    #       BASE_DIRECTORY "${PROJECT_FOLDER}/src")
-    setup_target_for_coverage_fastcov(
+    setup_target_for_coverage_gcovr_html(
           NAME IZ1_coverage
           EXECUTABLE ctest
           BASE_DIRECTORY "${PROJECT_FOLDER}/src")
