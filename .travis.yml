@@ -94,4 +94,4 @@ matrix:
         - curl -Os https://uploader.codecov.io/latest/linux/codecov
 
         - chmod +x codecov
-        - ./codecov -z -C "e04fcf272ba0ff999cc5896a11243297eb0c2ea4" -t ${CODECOV_TOKEN}
+        - ./codecov -t ${CODECOV_TOKEN}
